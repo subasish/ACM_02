@@ -109,7 +109,7 @@ We acquired four months (February, June, July, and October of 2015) of INRIX way
 \section{Literature Review}
 \label{sec:related work}
 %\paragraph{\textbf{Sentence Retrieval}}
-Many recent studies have aimed to determine origin destination patterns using crowd sourced data. Some key studies in this area are briefly described in this section. \\
+Many recent studies have aimed to determine origin destination patterns using crowd sourced data. Some key studies in this area are briefly described in this section. 
 
 In a study conducted by Sana et al. [1], researchers used information from the Google Aggregated and Anonymized Trips (AAT) to develop a machine learning model and generate the San Francisco Bay Area hourly O-D demand matrices. They found that the developed model could effectively predict dynamic O-D person trip matrices by using both existing and future versions of AAT information. In another study, Ma et al. [2] developed a data-driven structure to estimate daily dynamic O-D. To accomplish this, researchers used high-granular traffic frequency and speed data spanning over many years. The developed framework employed t-Distributed Stochastic Neighbor Embedding (t-SNE) and k-means techniques to statistically cluster regular traffic data into typical traffic models. Fan et al. [3] conducted a study in Guangzhou City, China; they developed an O-D assessment methodology for systematic transit travelers. The researchers used smart card bus transportation data to improve the trip-chain O-D estimation algorithms. The results of the study were useful for the real-world work associated with the O-D estimation. In another study, Ge et al. [4] used aggregated data of mobile phone traces to estimate work-related trips and develop a method to estimate O-D matrices based on maximum entropy principle. The researchers calculated the trip production and attraction by using non-linear programming problem; they then used a matrix fitting problem to distribute trips to each O-D pair. Furthermore, two recent studies used Maryland INRIX waypoint data; one study estimated vehicle miles traveled [5] and another determined the reliability of truck drivers’ routing decisions [6]. 
 
@@ -134,8 +134,6 @@ In a study conducted by Sana et al. [1], researchers used information from the G
 \label{sec:approach}
 %  not needed: \subsection{Overview}
 %\label{subsec:overview}
-Given a ranked list of entities for a query, we seek to embellish it with passages which would explain to the user why the entity is relevant to the query. We call the entities in the ranking as target entities. We only try to predict support passages for target entities which are also relevant (according to the entity ground truth for the query). To model this joint relevance for \textit{both} the query and the entity, we use the co-occurring entities with a given entity. 
-
 \subsection{Data Sources}
 \label{subsec:features}
 The research team used three separate databases to perform the analysis:
@@ -146,13 +144,13 @@ The research team used three separate databases to perform the analysis:
 \end{itemize}
 \subsubsection{Maryland INRIX trip data. }
 \label{subsubsec:features:1}
-The research team members collected Maryland INRIX trip data to perform the analysis. The acquired data for four months (February, June, July and October 2015) contain three types of monthly files in comma separated value (CSV) format:
+We collected Maryland INRIX trip data to perform the analysis. The acquired data for four months (February, June, July and October 2015) contain three types of monthly files in comma separated value (CSV) format:
 \begin{itemize}
     \item TripRecordsReport (trip data)
     \item TripRecordsReportWaypoints (waypoint data)
     \item TripsRecordsReportProviderDetails (information on trip data providers)
 \end{itemize}
-The acquired dataset contains:
+The acquired data set contains:
 \begin{itemize}
     \item 19,690,402 trip information
     \item 1,376,720,203 waypoint (geospatial point recorded by GPS devices that represents the location of the recorded vehicle) information
@@ -169,19 +167,19 @@ The acquired dataset contains:
 
 \subsubsection{ACS Data}
 \label{subsubsec:feature:2}
-The ACS data, acquired from the U.S. Census Bureau's Decennial Census Program, provide details of demographic, social, housing, and economic estimates for different spatial area units including Census tract, and block groups. The research team used ACS five-year (2013-2017) estimates for Maryland. The research team collected a wider list of variables in the preliminary analysis.  
+The ACS data, acquired from the U.S. Census Bureau's Decennial Census Program, provide details of demographic, social, housing, and economic estimates for different spatial area units including Census tract, and block groups. We used ACS five-year (2013-2017) estimates for Maryland. The research team collected a wider list of variables in the preliminary analysis.  
 
 \subsubsection{LEHD Data. }
 \label{subsubsec:feature:3}
-The research team also used the Census block data of LEHD Origin-Destination Employment Statistics (LODES) 2015 data. The LODES files contain data for Residential Area Characteristics (RAC) and Work Area Characteristics (WAC). The block level data are merged into block group level to perform the analysis.
+We also used the Census block data of LEHD Origin-Destination Employment Statistics (LODES) 2015 data. The LODES files contain data for Residential Area Characteristics (RAC) and Work Area Characteristics (WAC). 
 
 \subsection{Data Integration}
 \label{subsec:features}
-The research team used three separate databases to perform the analysis:
+The data integration steps
 \begin{itemize}
-    \item The team members acquired 2013-2017 ACS data for Maryland from the U.S. Census. ACS data contains different tables such as age, gender, income, and household. The research team compiled the data for the key demographic and relevant data. 
-    \item The team members collected block level 2015 LEHD data for Maryland. The block level RAC and WAC data are merged into block group level. 
-    \item The research team used QGIS tool to spatially merge origin and destination data with census block groups. Later several separate databases were developed based on the following:
+    \item The collected ACS data contains different tables such as age, gender, income, and household. We selected key demographic and relevant information for this analysis. 
+    \item  The block level RAC and WAC data were merged into block group level. 
+    \item We used QGIS tool to spatially merge origin and destination data with census block groups level information. Later several separate databases were developed based on the following:
     \begin{itemize}
         \item Monthly O-D data by block groups
         \item Daily O-D data by block groups    
@@ -209,34 +207,28 @@ The research team used three separate databases to perform the analysis:
 \label{sec:Evaluation}
 \subsection{Research Questions}
 \label{subsec:research questions}
-We study the extent to which the following components in our approach affect the quality of retrieved support passages:
-
+We developed several key research questions:
 \begin{itemize}
-\item[\textbf{RQ1}] What is the effect of contextual entities?
-\item[\textbf{RQ2}] What is the effect of entity salience? 
-\item[\textbf{RQ3}] Is it better to expand queries with entities or words?
+\item[\textbf{RQ1}] How do O-D patterns differ by different temporal units (for example, hour, month, day of the week) and vehicle types?
+\item[\textbf{RQ2}] How can we improve the conventional O-D visualizations? 
+\item[\textbf{RQ3}] What are key contributors for different O-D patterns?
 \end{itemize}
-
-%Our goal is to study the following research questions.\\
-%\textbf{RQ1} To what extent do entities in context affect the support passage retrieval?  \\\\
-%\textbf{RQ2} To what extent does entity salience affect the support passage retrieval?  \\
-%\textbf{RQ3} Are contextual entities more informative than contextual words? 
-
 
 \subsection{O-D Distribution}
 \label{subsec:Evaluation Paradigm}
-Figure 1 illustrates the origin and destination trips by block groups. A lighter color in a certain area indicates the lower number of trips, while darker colors indicate a higher number of trips per block group.
-
 It is important to determine the key O-D matrices for different scenarios. Three different temporal patterns were used for analysis: 1) all 24 hours, 2) morning peak (6-10 am, Mon-Fri), and 3) evening peak (4-8 pm, Mon-Fri). Figure 2 indicates that the top O-D generators vary by different temporal slices. 
 
-A chord diagram, resourceful in comparing the similarities and patterns within a dataset, illustrates the interrelationships between individuals (for this study, each block group is considered as individual spatial unit). The associations between individual block groups are used in displaying commonality of information or interest. Nodes are arranged in a circular form, with the association between points connected to each other either with arcs or curves. The assigned values to each of the connection are represented proportionally by the size of each arc. The color is used in grouping the data into different categories that aid in making comparisons and distinguishing groups. Figure 3 indicates that the in-betweenness between the O-D pairs is significant. \\
+To answer RQ1 and RQ2, we developed several different data visualization tools to provide additional insights on the data. Figure 1 illustrates the O-D patterns by month. The color of the nodes are based on the distances. The overall trends look similar for three months (February, June, and October). However, the patterns of July is significantly different from the other three months.  
 
+A chord diagram, resourceful in comparing the similarities and patterns within a dataset, illustrates the interrelationships between individuals (for this study, each block group is considered as individual spatial unit). The associations between individual block groups are used in displaying commonality of information or interest. Nodes are arranged in a circular form, with the association between points connected to each other either with arcs or curves. The assigned values to each of the connection are represented proportionally by the size of each arc. The color is used in grouping the data into different categories that aid in making comparisons and distinguishing groups. Figure 2, the static version of the interactive chord diagram tool, indicates that the in-betweenness between the O-D pairs is significant. An interactive version will provide 
+
+Figure 3 and Figure 4 show the top 20 O-D pairs for two consumer vehicles, and taxis/shuttles respectively. The O-D patterns of the consumer vehicles show higher distances between the origin and destinations. Taxi or shuttle trips are rather short and mostly in between the major urban locations. The top O-D pairs also differ by different temporal clusters for both consumer vehicle trips and taxis/shuttles.  
 
 \section{Results}
 \label{subsubsec: reults}
 \subsection{Rules Mining}
 \label{subsec:Rules Mining}
-This study used classification-based association rules to develop the rules associated with O-D patterns. The association rule can be represented as $Antecedent (A) \rightarrow Consequent (B)$, where both
+We used classification-based association rules to develop the rules associated with O-D patterns. The association rule can be represented as $Antecedent (A) \rightarrow Consequent (B)$, where both
 
 of them are disjoint itemsets. Here, $Support\ of\ antecedent,\ S\left(A\right)=\frac{\sigma(A)}{N};\ Support\ of\ consequent,\ S\left(B\right)=\frac{\sigma(B)}{N};$ and Support of the rule  can be written as 
 $Suppport\ of\ rule\ or\ S\left(A\rightarrow B\right)=\frac{\sigma(A\cap B)}{N};$
@@ -244,9 +236,7 @@ The measure of reliability for a generated rule is known as confidence ($C\left(
 
 The lift ($L\left(A\rightarrow B\right)=\frac{S\left(A\rightarrow B\right)}{S\left(A\right).S(B)}$) is a measure that represents the ratio of confidence and expected confidence. A lift value greater than one shows positive interdependence between A and B, while a value smaller than one refers negative interdependence, and a value of one signifies independence.
 
-The research team selected the significant variables by performing random forest algorithm. The selected variables (block group level) for model development include average O-D measure, total population (Popu), households (HH), households with family (HH\_F), total WAC jobs (Total\_Jobs\_WAC), and household median income (HH\_MedInc). The top 15 rules with high lift values are listed in Table 1. Average O-D measures per block group are divided into five classes based on the quantile percentages: TQ= 1 [1-20 percent], TQ= 2 [21-40 percent], TQ= 3 [41-60 percent], TQ= 4 [61-80 percent], and TQ=5 [81-100 percent]. For example, TQ=5 indicates the block groups with top 20 percent percent of the O-D trips. The findings show that higher number of populations, WAC, and households are associated with higher   number of O-D trips. The rules provide several breakpoints of the variable clusters to determine the top rules. 	
-
-
+We selected the significant variables by performing random forest algorithm. The selected variables (block group level) for model development include average O-D measure, total population (Popu), households (HH), households with family (HH\_F), total WAC jobs (Total\_Jobs\_WAC), and household median income (HH\_MedInc). The top 40 rules with high lift values are listed in Table 1. Average O-D measures per block group are divided into five classes based on the quantile percentages: TQ= 1 [1-20 percent], TQ= 2 [21-40 percent], TQ= 3 [41-60 percent], TQ= 4 [61-80 percent], and TQ=5 [81-100 percent]. For example, TQ=5 indicates the block groups with top 20 percent percent of the O-D trips. The findings show that higher number of populations, WAC, and households are associated with higher   number of O-D trips. The rules provide several breakpoints of the variable clusters to determine the top rules. 	
 
 \begin{table*}[t]
   \centering
@@ -298,24 +288,20 @@ HH=(972.5; 1252.5{]}, HH\_MedInc=(\textgreater 98467{]}                         
 \end{tabular}
 \end{table*}
 
+Below, we discuss each of the research questions presented in Section \ref{subsec:research questions}.
+
+\textbf{RQ1:} We observe in Figure 1 that majority of the monthly O-D patterns are similar. The daily O-D patterns by the top 20 O-D generators indicate that range of daily trips in the block groups differ in values to some extent.The trip distribution by vehicle types also differ in patterns. The top consumer vehicle O-D generators have distance measures than the top O-D generators for taxis/shuttles. 
 
 
-The most interesting results are presented in Table \ref{tab:results}. Due to space contraints other results were moved to the online appendix for this paper. Below, we discuss each of the research questions presented in Section \ref{subsec:research questions}.
+\textbf{RQ2:} Data visualization is an integral part of data-driven analysis. A carefully developed data visualization delivers a powerful cognitive advantage to its viewers. We aimed to develop well-designed and interactive visualization to provide the end users a spontaneous and reactive impression and help them to cut through the clutter of complex data dynamics. We used different data visualization libraries such as D3.js and deck.gl to developed O-D visualizations with important matrices. We have opensourced the codes developed for this study in Github. 
 
-\textbf{RQ1 (contextual entities):} We observe in Table \ref{tab:results} that ranking passages with contextual entities (ECN) achieves a MAP of 0.31 and query expansion with entities (QEE) a MAP of 0.30. This is a significant improvement over the two baselines which have a MAP of 0.09 and 0.07 respectively. This demonstrates the benefit of contextual entities. See Section \ref{subsec: ablation_study} for more discussion.
-
-\textbf{RQ2 (entity salience):} We observe in Table \ref{tab:results} that the two methods which rank passages using entity salience perform the worst. This is also the case when combined with other features using learning-to-rank. We manually confirmed that SWAT correctly identifies salient and non-salient entities.  However, only few retrieved entities have a passage with a salient mention. While entities with salient passages are often relevant, a majority (95\%) of retrieved entities do not have a passage with a salient mention in the candidate pool. Since the salience feature is only applicable to very few entities, it only has a limited impact on the overall result. 
-
-\textbf{RQ3 (query expansion):} We observe that among all methods which retrieve with contextual entities, the method using LMJM with RM3 performs the best with a MAP of 0.30. Note that here we use RM3 to expand the query with entities (see Section \ref{subsubsec:features:1}(\ref{en: Query expansion using entities from entity context documents})). Also, among all methods which retrieve with contextual words, the methods using LMJM with RM3 performs the best with a MAP of 0.35.  As we can see, retrieval with contextual words outperforms retrieval with contextual entities and although contextual entities achieve good results, they are unable to outperform contextual words.  Hence, contextual words are more informative than contextual entities. Another observation is that among BM25, LMDS and LMJM, retrieval with LMJM always gives the best performance for both contextual entities and contextual words. For more discussion, see Section \ref{subsec: ablation_study}.
-
+\textbf{RQ3:} We observe that rules mining provided top 40 association rules that do not need any kind of prior assumptions. As earlier studies did not explore rules mining on O-D data sets, the findings from this study can shed some lights in this unexplored research domain. The current analysis is limited to only 40 top rules. However, more insightful rules can be developed by using different thresholds of support and confidence. 
 
 \section{Conclusion and Future Work}
 \label{sec: conclusion}
-This work addresses the task of support passage retrieval to enrich entity rankings in response to a search query. We propose a joint query-entity-passage ranking method and present some initial results. In particular, we show that co-occurring entities are an important indicator of which passages might support an entity for a query. In contrast, retrieving passages using a compound query of the original query and the entity is not sufficient for the problem.
+The current study framework was applied to 19.8 million raw GPS vehicle trajectories collected in 2015 in Maryland. The results showed that distribution of O-D measures for different vehicle types vary by hour and by month. The top 20 block groups with high average O-D measure contribute approximately 8.5 percent of trips. The generated top 40 rules provide several breakpoints of the key variables for appropriate rule development. The generated rules can be used for developing appropriate strategies in a way to improve the travel experiences of the roadway users.
 
-We also experiment with entity salience, and find that it is a highly informative feature when it is applicable, however 95\% of target entities do not have any passage with a salient mention in the candidate set. We thus identify a need for developing high-recall salience techniques that are applicable to a larger number of entities, as well as new indexing and retrieval methods that integrate entity salience in an early phase.
-
-
+The current study is not without limitation. The rules mining applied in this study is limited to monthly O-D data. Future studies should explore the rules with more granular levels of data (for example, daily or hourly). Additionally, the current study is limited to only four months of data from 2015. A more comprehensive data is required to develop a robust framework of O-D measures. 
 
 
 \bibliographystyle{ACM-Reference-Format}
@@ -328,7 +314,7 @@ We also experiment with entity salience, and find that it is a highly informativ
 \item Fan, J., C. Fu, K. Stewart, and L. Zhang. Using big GPS trajectory data analytics for vehicle miles traveled estimation. Transportation Research Part C, Vol. 103, 2019, pp. 298 \textemdash 307. 
 \item Kong, X., W. Eisele, Y. Zhang, and D. Cline. Evaluating the Impact of Real-time Mobility and Travel Time Reliability Information on Truck Drivers’ Routing Decisions. Transportation Research Record: Journal of the Transportation Research Board. Vol. 2672, 2018, pp. 164\textemdash172.
 \end{enumerate}
-
+\end{enumerate}
 
 
 
